@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'tango',
     'django_extensions',
-    'blog.apps.BlogConfig',
+    'blog',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -144,4 +145,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(STATICFILES_DIRS[0], 'images')
 
 # Redirection urls
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
+
+# User model
+AUTH_USER_MODEL = 'accounts.User'
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
