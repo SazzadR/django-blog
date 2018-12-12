@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'tango',
     'django_extensions',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
