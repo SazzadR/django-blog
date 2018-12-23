@@ -1,4 +1,5 @@
 from django import forms
+from accounts.models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -112,4 +113,26 @@ class LoginForm(AuthenticationForm):
         fields = {
             'username',
             'password',
+        }
+
+
+class UserForm(forms.ModelForm):
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control'
+    }))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+        labels = {
+            'username': 'Username',
+            'email': 'Email'
+        }
+        widgets = {
+            'username': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'autofocus': True
+                }
+            )
         }

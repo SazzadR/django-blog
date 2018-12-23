@@ -1,5 +1,7 @@
 {% extends 'blog/base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
     <div class="content-section">
         <div class="media">
@@ -10,5 +12,28 @@
                 <p class="text-secondary">{{ request.user.email }}</p>
             </div>
         </div>
+        <form action="{% url 'accounts:profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in user_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}" class="col-form-label">
+                        {{ field.label }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+                    </label>
+                    {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        <small class="form-text text-muted">
+                            {% for error in field.errors %}
+                                <li class="text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </small>
+                    {% else %}
+                        {% render_field field %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
     </div>
 {% endblock %}
