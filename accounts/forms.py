@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import User
+from accounts.models import User, Profile
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -135,4 +135,13 @@ class UserForm(forms.ModelForm):
                     'autofocus': True
                 }
             )
+        }
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+        labels = {
+            'image': 'Profile image'
         }
