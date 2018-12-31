@@ -49,7 +49,12 @@ class Profile(View):
 def get_profile_image(request, username):
     user = User.objects.get(username=username)
 
-    with open(user.profile.image.path, 'rb') as img_f:
-        encoded_string = base64.b64encode(img_f.read())
+    try:
+        with open(user.profile.image.path, 'rb') as img_f:
+            encoded_string = base64.b64encode(img_f.read())
+            status = 200
+    except (ValueError, FileNotFoundError):
+        encoded_string = None
+        status = 404
 
-    return HttpResponse(encoded_string)
+    return HttpResponse(encoded_string, status=status)
