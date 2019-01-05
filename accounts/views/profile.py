@@ -5,6 +5,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from accounts.forms import UserForm, ProfileForm
+from accounts.tasks import clear_unused_profile_images
 from django.core.files.storage import FileSystemStorage
 
 
@@ -37,6 +38,8 @@ class Profile(View):
             uploaded_filename = fs.save(image.name, image)
             user.profile.image = 'profile_pics/{}'.format(uploaded_filename)
             user.profile.save()
+
+        clear_unused_profile_images.delay()
 
         self.insert_profile_image(request)
 

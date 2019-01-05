@@ -155,3 +155,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+# Celery settings
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
